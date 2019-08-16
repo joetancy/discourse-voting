@@ -14,5 +14,5 @@ en:
       one: "A vote has been moved."
       other: "%{count} votes have been moved."
     duplicated_votes:
-      one: "A vote could not be moved because user already voted in the other topic."
+      one: "A vote could not be moved because the user already voted in the other topic."
       other: "%{count} votes could not be moved because users already voted in the other topic."
