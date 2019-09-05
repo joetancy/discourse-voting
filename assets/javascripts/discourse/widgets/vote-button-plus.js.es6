@@ -28,11 +28,11 @@ export default createWidget("vote-button", {
     var buttonTitle = I18n.t("voting.vote_title_plus");
     if (!this.currentUser) {
       if (attrs.vote_count) {
-        buttonTitle = I18n.t("voting.anonymous_button", {
+        buttonTitle = I18n.t("voting.anonymous_button_plus", {
           count: attrs.vote_count
         });
       } else {
-        buttonTitle = I18n.t("voting.anonymous_button", { count: 1 });
+        buttonTitle = I18n.t("voting.anonymous_button_plus", { count: 1 });
       }
     } else {
       if (attrs.closed) {
