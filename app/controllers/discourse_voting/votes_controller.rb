@@ -124,6 +124,50 @@ module DiscourseVoting
       render json: obj
     end
 
+    def unupvote
+      topic_id = params["topic_id"].to_i
+      topic = Topic.find_by(id: topic_id)
+
+      guardian.ensure_can_see!(topic)
+
+      current_user.custom_fields[DiscourseVoting::UPVOTES] = current_user.votes.dup - [topic_id]
+      current_user.save!
+
+      topic.update_vote_count
+
+      obj = {
+        can_vote: !current_user.reached_voting_limit?,
+        vote_limit: current_user.vote_limit,
+        vote_count: topic.custom_fields[DiscourseVoting::VOTE_COUNT].to_i,
+        who_voted: who_voted(topic),
+        votes_left: [(current_user.vote_limit - current_user.vote_count), 0].max
+      }
+
+      render json: obj
+    end
+
+    def undownvote
+      topic_id = params["topic_id"].to_i
+      topic = Topic.find_by(id: topic_id)
+
+      guardian.ensure_can_see!(topic)
+
+      current_user.custom_fields[DiscourseVoting::DOWNVOTES] = current_user.votes.dup - [topic_id]
+      current_user.save!
+
+      topic.update_vote_count
+
+      obj = {
+        can_vote: !current_user.reached_voting_limit?,
+        vote_limit: current_user.vote_limit,
+        vote_count: topic.custom_fields[DiscourseVoting::VOTE_COUNT].to_i,
+        who_voted: who_voted(topic),
+        votes_left: [(current_user.vote_limit - current_user.vote_count), 0].max
+      }
+
+      render json: obj
+    end
+
     protected
 
     def who_voted(topic)
