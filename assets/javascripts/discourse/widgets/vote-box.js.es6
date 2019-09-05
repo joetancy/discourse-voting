@@ -79,7 +79,7 @@ export default createWidget("vote-box", {
   upVote() {
     var topic = this.attrs;
     var state = this.state;
-    return ajax("/voting/vote", {
+    return ajax("/voting/upvote", {
       type: "POST",
       data: {
         topic_id: topic.id
@@ -102,7 +102,7 @@ export default createWidget("vote-box", {
   downVote() {
     var topic = this.attrs;
     var state = this.state;
-    return ajax("/voting/vote", {
+    return ajax("/voting/downvote", {
       type: "POST",
       data: {
         topic_id: topic.id

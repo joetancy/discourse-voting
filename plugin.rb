@@ -184,6 +184,20 @@ after_initialize do
       votes
     end
 
+    def upvotes
+      votes = self.custom_fields[DiscourseVoting::UPVOTES] || []
+      # "" can be in there sometimes, it gets turned into a 0
+      votes = votes.reject { |v| v == 0 }.uniq
+      votes
+    end
+
+    def downvotes
+      votes = self.custom_fields[DiscourseVoting::DOWNVOTES] || []
+      # "" can be in there sometimes, it gets turned into a 0
+      votes = votes.reject { |v| v == 0 }.uniq
+      votes
+    end
+
     def votes_archive
       archived_votes = self.custom_fields[DiscourseVoting::VOTES_ARCHIVE] || []
       archived_votes = archived_votes.reject { |v| v == 0 }.uniq
@@ -191,7 +205,8 @@ after_initialize do
     end
 
     def reached_voting_limit?
-      vote_count >= vote_limit
+      # vote_count >= vote_limit
+      false
     end
 
     def vote_limit
@@ -240,10 +255,16 @@ after_initialize do
     end
 
     def update_vote_count
-      count =
+      # count =
+      #   UserCustomField.where("value = :value AND name IN (:keys)",
+      #     value: id.to_s, keys: [DiscourseVoting::VOTES, DiscourseVoting::VOTES_ARCHIVE]).count
+      upcount =
         UserCustomField.where("value = :value AND name IN (:keys)",
-          value: id.to_s, keys: [DiscourseVoting::VOTES, DiscourseVoting::VOTES_ARCHIVE]).count
-
+          value: id.to_s, keys: [DiscourseVoting::UPVOTES, DiscourseVoting::VOTES_ARCHIVE]).count
+      downcount =
+        UserCustomField.where("value = :value AND name IN (:keys)",
+          value: id.to_s, keys: [DiscourseVoting::DOWNVOTES, DiscourseVoting::VOTES_ARCHIVE]).count
+      count = upcount - downcount
       custom_fields[DiscourseVoting::VOTE_COUNT] = count
       save_custom_fields
     end
@@ -395,6 +416,8 @@ after_initialize do
   DiscourseVoting::Engine.routes.draw do
     post 'vote' => 'votes#vote'
     post 'unvote' => 'votes#unvote'
+    post 'upvote' => 'votes#upvote'
+    post 'downvote' => 'votes#downvote'
     get 'who' => 'votes#who'
   end
 
