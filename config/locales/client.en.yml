@@ -26,6 +26,12 @@ en:
       anonymous_button:
         one: "Vote"
         other: "Votes"
+      anonymous_button_plus:
+        one: "+"
+        other: "+"
+      anonymous_button_minus:
+        one: "-"
+        other: "-"
       remove_vote: "Remove vote"
     filters:
       votes:
