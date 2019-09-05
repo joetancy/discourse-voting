@@ -19,7 +19,8 @@ Discourse.anonymous_filters.push(:votes)
 
 after_initialize do
   module ::DiscourseVoting
-    VOTES = "votes".freeze
+    UPVOTES = "votes".freeze
+    DOWNVOTES = "votes".freeze
     VOTES_ARCHIVE = "votes_archive".freeze
     VOTE_COUNT = "vote_count".freeze
     VOTING_ENABLED = "enable_topic_voting"
@@ -29,7 +30,8 @@ after_initialize do
     end
   end
 
-  User.register_custom_field_type(::DiscourseVoting::VOTES, [:integer])
+  User.register_custom_field_type(::DiscourseVoting::UPVOTES, [:integer])
+  User.register_custom_field_type(::DiscourseVoting::DOWNVOTES, [:integer])
   User.register_custom_field_type(::DiscourseVoting::VOTES_ARCHIVE, [:integer])
   Topic.register_custom_field_type(::DiscourseVoting::VOTE_COUNT, :integer)
   Category.register_custom_field_type(::DiscourseVoting::VOTING_ENABLED, :boolean)
@@ -239,6 +241,24 @@ after_initialize do
       count =
         UserCustomField.where("value = :value AND name IN (:keys)",
           value: id.to_s, keys: [DiscourseVoting::VOTES, DiscourseVoting::VOTES_ARCHIVE]).count
+
+      custom_fields[DiscourseVoting::VOTE_COUNT] = count
+      save_custom_fields
+    end
+
+    def update_upvote_count
+      count =
+        UserCustomField.where("value = :value AND name IN (:keys)",
+          value: id.to_s, keys: [DiscourseVoting::UPVOTES, DiscourseVoting::VOTES_ARCHIVE]).count
+
+      custom_fields[DiscourseVoting::VOTE_COUNT] = count
+      save_custom_fields
+    end
+
+    def update_downvote_count
+      count =
+        UserCustomField.where("value = :value AND name IN (:keys)",
+          value: id.to_s, keys: [DiscourseVoting::DOWNVOTES, DiscourseVoting::VOTES_ARCHIVE]).count
 
       custom_fields[DiscourseVoting::VOTE_COUNT] = count
       save_custom_fields

@@ -49,7 +49,7 @@ export default createWidget("vote-button", {
         }
       }
     }
-    return buttonTitle;
+    return "<img src='https://icongr.am/feather/thumbs-down.svg?size=32&color=FFFFFF'</img>";
   },
 
   click() {
@@ -65,7 +65,7 @@ export default createWidget("vote-button", {
     ) {
       this.parentWidget.state.allowClick = false;
       this.parentWidget.state.initialVote = true;
-      this.sendWidgetAction("addVote");
+      this.sendWidgetAction("downVote");
     }
     if (this.attrs.user_voted || this.currentUser.votes_exceeded) {
       $(".vote-options").toggle();

@@ -21,19 +21,19 @@ export default createWidget("vote-box", {
     var voteButtonPlus = this.attach("vote-button-plus", attrs);
     var voteCount = this.attach("vote-count", attrs);
     var voteButtonMinus = this.attach("vote-button-minus", attrs);
-    var voteOptions = this.attach("vote-options", attrs);
-    let contents = [voteButtonPlus, voteCount, voteButtonMinus, voteOptions];
+    // var voteOptions = this.attach("vote-options", attrs);
+    let contents = [voteButtonPlus, voteCount, voteButtonMinus];
 
-    if (state.votesAlert > 0) {
-      const html =
-        "<div class='voting-popup-menu vote-options popup-menu'>" +
-        I18n.t("voting.votes_left", {
-          count: state.votesAlert,
-          path: this.currentUser.get("path") + "/activity/votes"
-        }) +
-        "</div>";
-      contents.push(new RawHtml({ html }));
-    }
+    // if (state.votesAlert > 0) {
+    //   const html =
+    //     "<div class='voting-popup-menu vote-options popup-menu'>" +
+    //     I18n.t("voting.votes_left", {
+    //       count: state.votesAlert,
+    //       path: this.currentUser.get("path") + "/activity/votes"
+    //     }) +
+    //     "</div>";
+    //   contents.push(new RawHtml({ html }));
+    // }
 
     return contents;
   },
@@ -54,6 +54,52 @@ export default createWidget("vote-box", {
   },
 
   addVote() {
+    var topic = this.attrs;
+    var state = this.state;
+    return ajax("/voting/vote", {
+      type: "POST",
+      data: {
+        topic_id: topic.id
+      }
+    })
+      .then(result => {
+        topic.set("vote_count", result.vote_count);
+        topic.set("user_voted", true);
+        this.currentUser.set("votes_exceeded", !result.can_vote);
+        if (result.alert) {
+          state.votesAlert = result.votes_left;
+        }
+        topic.set("who_voted", result.who_voted);
+        state.allowClick = true;
+        this.scheduleRerender();
+      })
+      .catch(popupAjaxError);
+  },
+
+  upVote() {
+    var topic = this.attrs;
+    var state = this.state;
+    return ajax("/voting/vote", {
+      type: "POST",
+      data: {
+        topic_id: topic.id
+      }
+    })
+      .then(result => {
+        topic.set("vote_count", result.vote_count);
+        topic.set("user_voted", true);
+        this.currentUser.set("votes_exceeded", !result.can_vote);
+        if (result.alert) {
+          state.votesAlert = result.votes_left;
+        }
+        topic.set("who_voted", result.who_voted);
+        state.allowClick = true;
+        this.scheduleRerender();
+      })
+      .catch(popupAjaxError);
+  },
+
+  downVote() {
     var topic = this.attrs;
     var state = this.state;
     return ajax("/voting/vote", {
