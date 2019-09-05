@@ -44,7 +44,7 @@ export default createWidget("vote-button", {
           if (this.currentUser && this.currentUser.votes_exceeded) {
             buttonTitle = I18n.t("voting.voting_limit");
           } else {
-            buttonTitle = I18n.t("voting.vote_title");
+            buttonTitle = I18n.t("voting.vote_title_minus");
           }
         }
       }
