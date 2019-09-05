@@ -64,7 +64,7 @@ export default createWidget("vote-down-button", {
     if (
       !this.attrs.closed &&
       this.parentWidget.state.allowClick &&
-      !this.attrs.user_voted
+      !this.attrs.user_downvoted
     ) {
       this.parentWidget.state.allowClick = false;
       this.parentWidget.state.initialVote = true;

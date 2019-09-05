@@ -87,7 +87,7 @@ export default createWidget("vote-box", {
     })
       .then(result => {
         topic.set("vote_count", result.vote_count);
-        topic.set("user_voted", true);
+        topic.set("user_upvoted", true);
         this.currentUser.set("votes_exceeded", !result.can_vote);
         if (result.alert) {
           state.votesAlert = result.votes_left;
@@ -110,7 +110,7 @@ export default createWidget("vote-box", {
     })
       .then(result => {
         topic.set("vote_count", result.vote_count);
-        topic.set("user_voted", true);
+        topic.set("user_downvoted", true);
         this.currentUser.set("votes_exceeded", !result.can_vote);
         if (result.alert) {
           state.votesAlert = result.votes_left;
@@ -153,7 +153,7 @@ export default createWidget("vote-box", {
     })
       .then(result => {
         topic.set("vote_count", result.vote_count);
-        topic.set("user_voted", false);
+        topic.set("user_upvoted", false);
         this.currentUser.set("votes_exceeded", !result.can_vote);
         topic.set("who_voted", result.who_voted);
         state.allowClick = true;
@@ -173,7 +173,7 @@ export default createWidget("vote-box", {
     })
       .then(result => {
         topic.set("vote_count", result.vote_count);
-        topic.set("user_voted", false);
+        topic.set("user_downvoted", false);
         this.currentUser.set("votes_exceeded", !result.can_vote);
         topic.set("who_voted", result.who_voted);
         state.allowClick = true;

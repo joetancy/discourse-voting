@@ -64,7 +64,7 @@ export default createWidget("vote-up-button", {
     if (
       !this.attrs.closed &&
       this.parentWidget.state.allowClick &&
-      !this.attrs.user_voted
+      !this.attrs.user_upvoted
     ) {
       this.parentWidget.state.allowClick = false;
       this.parentWidget.state.initialVote = true;
