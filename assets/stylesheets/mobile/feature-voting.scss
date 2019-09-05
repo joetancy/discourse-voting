@@ -3,6 +3,7 @@
   float: none;
   max-width: none;
   text-align: inherit;
+  padding-right: 0 !important;
 }
 
 .voting-wrapper {
@@ -21,9 +22,10 @@
   max-width: 10em;
   margin-left: 0.5em;
   margin-right: 0.5em;
-  margin-top: 0;
+  margin-top: 0.35em;
   white-space: nowrap;
 }
+
 
 // TEMP: RTL overrides
 .title-voting {

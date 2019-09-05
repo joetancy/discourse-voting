@@ -25,7 +25,7 @@ export default createWidget("vote-button", {
   },
 
   html(attrs) {
-    var buttonTitle = I18n.t("voting.vote_title");
+    var buttonTitle = I18n.t("voting.vote_title_plus");
     if (!this.currentUser) {
       if (attrs.vote_count) {
         buttonTitle = I18n.t("voting.anonymous_button", {
