@@ -30,6 +30,7 @@ after_initialize do
     end
   end
 
+  User.register_custom_field_type(::DiscourseVoting::VOTES, [:integer])
   User.register_custom_field_type(::DiscourseVoting::UPVOTES, [:integer])
   User.register_custom_field_type(::DiscourseVoting::DOWNVOTES, [:integer])
   User.register_custom_field_type(::DiscourseVoting::VOTES_ARCHIVE, [:integer])
