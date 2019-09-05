@@ -19,8 +19,9 @@ Discourse.anonymous_filters.push(:votes)
 
 after_initialize do
   module ::DiscourseVoting
-    UPVOTES = "votes".freeze
-    DOWNVOTES = "votes".freeze
+    VOTES = "votes".freeze
+    UPVOTES = "upvotes".freeze
+    DOWNVOTES = "downvotes".freeze
     VOTES_ARCHIVE = "votes_archive".freeze
     VOTE_COUNT = "vote_count".freeze
     VOTING_ENABLED = "enable_topic_voting"
