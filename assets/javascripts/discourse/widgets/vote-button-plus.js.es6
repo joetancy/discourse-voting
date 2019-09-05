@@ -1,6 +1,7 @@
 import { createWidget } from "discourse/widgets/widget";
+import { iconNode } from "discourse-common/lib/icon-library";
 
-export default createWidget("vote-button", {
+export default createWidget("vote-up-button", {
   tagName: "button.btn.btn-primary.vote-button",
 
   buildClasses(attrs) {
@@ -25,6 +26,7 @@ export default createWidget("vote-button", {
   },
 
   html(attrs) {
+    let icon = iconNode('thumbs-up');
     var buttonTitle = I18n.t("voting.vote_title_plus");
     if (!this.currentUser) {
       if (attrs.vote_count) {
@@ -50,7 +52,7 @@ export default createWidget("vote-button", {
       }
     }
     // return buttonTitle;
-    return "<img src='https://icongr.am/feather/thumbs-up.svg?size=32&color=FFFFFF'</img>";
+    return icon;
   },
 
   click() {
