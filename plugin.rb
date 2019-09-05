@@ -418,6 +418,8 @@ after_initialize do
     post 'unvote' => 'votes#unvote'
     post 'upvote' => 'votes#upvote'
     post 'downvote' => 'votes#downvote'
+    post 'unupvote' => 'votes#unupvote'
+    post 'undownvote' => 'votes#undownvote'
     get 'who' => 'votes#who'
   end
 

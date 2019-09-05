@@ -59,7 +59,7 @@ export default createWidget("vote-down-button", {
     if (!this.currentUser) {
       this.sendWidgetAction("showLogin");
       $.cookie("destination_url", window.location.href);
-      return;
+      return; 
     }
     if (
       !this.attrs.closed &&
@@ -69,6 +69,8 @@ export default createWidget("vote-down-button", {
       this.parentWidget.state.allowClick = false;
       this.parentWidget.state.initialVote = true;
       this.sendWidgetAction("downVote");
+    } else {
+      this.sendWidgetAction("removeDownVote");
     }
     if (this.attrs.user_voted || this.currentUser.votes_exceeded) {
       $(".vote-options").toggle();

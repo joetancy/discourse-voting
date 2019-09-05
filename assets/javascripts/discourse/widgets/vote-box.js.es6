@@ -21,7 +21,7 @@ export default createWidget("vote-box", {
     var voteButtonPlus = this.attach("vote-button-plus", attrs);
     var voteCount = this.attach("vote-count", attrs);
     var voteButtonMinus = this.attach("vote-button-minus", attrs);
-    // var voteOptions = this.attach("vote-options", attrs);
+    var voteOptions = this.attach("vote-options", attrs);
     let contents = [voteButtonPlus, voteCount, voteButtonMinus];
 
     // if (state.votesAlert > 0) {
@@ -140,5 +140,47 @@ export default createWidget("vote-box", {
         this.scheduleRerender();
       })
       .catch(popupAjaxError);
+  },
+
+  removeUpVote() {
+    var topic = this.attrs;
+    var state = this.state;
+    return ajax("/voting/unupvote", {
+      type: "POST",
+      data: {
+        topic_id: topic.id
+      }
+    })
+      .then(result => {
+        topic.set("vote_count", result.vote_count);
+        topic.set("user_voted", false);
+        this.currentUser.set("votes_exceeded", !result.can_vote);
+        topic.set("who_voted", result.who_voted);
+        state.allowClick = true;
+        this.scheduleRerender();
+      })
+      .catch(popupAjaxError);
+  },
+
+  removeDownVote() {
+    var topic = this.attrs;
+    var state = this.state;
+    return ajax("/voting/undownvote", {
+      type: "POST",
+      data: {
+        topic_id: topic.id
+      }
+    })
+      .then(result => {
+        topic.set("vote_count", result.vote_count);
+        topic.set("user_voted", false);
+        this.currentUser.set("votes_exceeded", !result.can_vote);
+        topic.set("who_voted", result.who_voted);
+        state.allowClick = true;
+        this.scheduleRerender();
+      })
+      .catch(popupAjaxError);
   }
+
+  
 });

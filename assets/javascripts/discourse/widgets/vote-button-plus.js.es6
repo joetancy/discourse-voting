@@ -69,6 +69,8 @@ export default createWidget("vote-up-button", {
       this.parentWidget.state.allowClick = false;
       this.parentWidget.state.initialVote = true;
       this.sendWidgetAction("upVote");
+    } else {
+      this.sendWidgetAction("removeUpVote");
     }
     if (this.attrs.user_voted || this.currentUser.votes_exceeded) {
       $(".vote-options").toggle();
