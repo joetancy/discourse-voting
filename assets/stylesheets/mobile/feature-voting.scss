@@ -20,6 +20,7 @@
 .vote-button {
   max-width: 10em;
   margin-left: 0.5em;
+  margin-right: 0.5em;
   margin-top: 0;
   white-space: nowrap;
 }
@@ -33,7 +34,7 @@
 
 .vote-button {
   .rtl & {
-    margin-left: 0;
+    margin-left: 0.5em;
     margin-right: 0.5em;
   }
 }

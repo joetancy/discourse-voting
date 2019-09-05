@@ -18,10 +18,11 @@ export default createWidget("vote-box", {
   },
 
   html(attrs, state) {
+    var voteButtonPlus = this.attach("vote-button-plus", attrs);
     var voteCount = this.attach("vote-count", attrs);
-    var voteButton = this.attach("vote-button", attrs);
+    var voteButtonMinus = this.attach("vote-button-minus", attrs);
     var voteOptions = this.attach("vote-options", attrs);
-    let contents = [voteButton, voteCount, voteButton, voteOptions];
+    let contents = [voteButtonPlus, voteCount, voteButtonMinus, voteOptions];
 
     if (state.votesAlert > 0) {
       const html =
