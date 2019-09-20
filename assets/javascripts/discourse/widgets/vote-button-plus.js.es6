@@ -69,7 +69,6 @@ export default createWidget("vote-up-button", {
       this.parentWidget.state.allowClick = false;
       this.parentWidget.state.initialVote = true;
       this.sendWidgetAction("upVote");
-      this.sendWidgetAction("removeDownVote");
     } else {
       this.sendWidgetAction("removeUpVote");
     }
