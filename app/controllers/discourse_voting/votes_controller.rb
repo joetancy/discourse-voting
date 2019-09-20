@@ -54,7 +54,6 @@ module DiscourseVoting
       unless current_user.reached_voting_limit?
 
         current_user.custom_fields[DiscourseVoting::UPVOTES] = current_user.votes.dup.push(topic_id).uniq
-        current_user.custom_fields[DiscourseVoting::DOWNVOTES] = current_user.votes.dup - [topic_id]
         current_user.save!
 
         topic.update_vote_count
@@ -85,7 +84,6 @@ module DiscourseVoting
       unless current_user.reached_voting_limit?
 
         current_user.custom_fields[DiscourseVoting::DOWNVOTES] = current_user.votes.dup.push(topic_id).uniq
-        current_user.custom_fields[DiscourseVoting::UPVOTES] = current_user.votes.dup - [topic_id]
         current_user.save!
 
         topic.update_vote_count
