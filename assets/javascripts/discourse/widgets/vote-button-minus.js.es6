@@ -10,7 +10,7 @@ export default createWidget("vote-down-button", {
     if (attrs.closed) {
       buttonClass = "voting-closed";
     } else {
-      if (!attrs.user_voted) {
+      if (!attrs.user_downvoted) {
         buttonClass = "nonvote";
       } else {
         if (this.currentUser && this.currentUser.votes_exceeded) {
@@ -69,6 +69,7 @@ export default createWidget("vote-down-button", {
       this.parentWidget.state.allowClick = false;
       this.parentWidget.state.initialVote = true;
       this.sendWidgetAction("downVote");
+      this.sendWidgetAction("removeUpVote");
     } else {
       this.sendWidgetAction("removeDownVote");
     }
